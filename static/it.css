@@ -58,6 +58,8 @@ p {
 }
 
 .tiles > a {
+	max-width: 300px;
+	width: 100%;
 	color: #051f49;
 	text-decoration: none;
 }
@@ -65,7 +67,6 @@ p {
 .tiles > a > li {
 	position: relative;
 	height: 100px;
-	width: 300px;
 	margin: 10px 0;
 	padding: 10px;
 	overflow: hidden;
