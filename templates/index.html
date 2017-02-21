@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+	body {
+		font-size: 20px;
+	}
+</style>
+</head>
+<body>
+
+<h1>Luna Phipps-Costin's Personal Website</h1>
+<p style="font-size: 40px;"><b><a href="/it">Looking for my IT work?</a></b></p>
+<p>"Sometimes, when I have time, more often when I don't, I make stuff."</p>
+<p>Hi, I'm Luna, high schooler and <a href="https://stallman.org/articles/on-hacking.html">hacker</a>. I created and continue to maintain <a href="http://cosinegaming.com">Cosine Gaming</a>.</p>
+<p>To quote my <a href="http://cosinegaming.com/about">about page</a> on CG, here's a little about me:</p>
+<p>
+	Cosine is often seen wasting her time in front of two bright LCDs,
+	discussing with her friends about Bioshock,
+	attempting to play an instrument and consoling crying onlookers,
+	moving her pencil on paper in weird patterns she tries to call "art",
+	learning so many languages she'll probably never be fluent in any of them,
+	working through the dense pages of Kagan's AP Euro textbook,
+	reading old classics she should have read ages ago,
+	watching TV (especially anime),
+	playing games on her PC,
+	playing games on her friends's consoles,
+	listing things she does,
+	or simply being in awe of how awesome <a href="http://en.wikipedia.org/wiki/MOSFET">MOSFET Transistors</a> are.
+</p>
+
+{% set ip = "216.195.175.190" %}
+
+<h2>Email</h2>
+<p>All of these emails will make it to me eventually</p>
+<ul>
+	<li><code>{{ "lucidlyluna@gmail.com"|urlize }}</code> (most personal)</li>
+	<li><code>{{ "luna@lunaphippscostin.com"|urlize }}</code> (redirects to personal)</li>
+	<li><code>{{ "18lphippscostin@rsu21.net"|urlize }}</code> (school)</li>
+	<li><code>{{ "cosinegaming@gmail.com"|urlize }}</code> (CG related)</li>
+	<li><code>{{ "cosine@cosinegaming.com"|urlize }}</code> (CG related spec. to me)</li>
+</ul>
+
+<h2>Usernames</h2>
+<p>I try to use the username <code>Cosine</code>, but when that is not available I use <code>CosineP</code>, which is almost always available.</p>
+<ul>
+	<li><code><a href="https://www.reddit.com/user/CosineP">/u/CosineP</a></code> on reddit</li>
+	<li><code>cosinep</code> on snapchat<a href="#snapchat" name="snapchatref">*</a></li>
+	<li><code>More Important Things</code> on Steam</li>
+</ul>
+
+<h2>Projects / Links</h2>
+<ul>
+	<li><a href="http://cosinegaming.com/">Cosine Gaming</a><ul>
+		<li>Also hosts my (more-or-less) personal <a href="http://cosinegaming.com/blog/">blog</a></li>
+	</ul></li>
+	<li><a href="https://github.com/CosineP/">GitHub (personal)</a><ul>Especially:
+		<li><a href="https://github.com/CosineP/subreddit-classifier">Subreddit Classifier</a></li>
+	</ul></li>
+	<li><a href="https://github.com/CosineGaming/">GitHub (CG)</a></li>
+</ul>
+
+<h2>Useful Networking Links</h2>
+<ul>
+	<li>My IP: <a href="http://{{ ip }}">{{ ip }}</a></li>
+	<li><a href="home.cosinegaming.com:8080">Local CG Instance</a> (when it's up)</li>
+	<li>SSH: luna@{{ ip }}:22</li>
+</ul>
+
+<h2>Things I like</h2>
+<ul>
+	<li><a href="https://reddit.com/">reddit</a></li>
+	<li><a href="https://xkcd.com">xkcd</a></li>
+	<li><a href="https://stallman.org">RMS's personal website</a></li>
+	<li><a href="http://jonls.dk/redshift/">Redshift (makes your computer screen less like the sun during the night)</a></li>
+	<li><a href="https://www.gnu.org/">GNU/Linux, a free software operating system</a></li>
+	<li><a href="http://www.vim.org/">Vim, a text editor</a></li>
+	<li>Cookies</li>
+	<li>Playing music (Tenor Saxophone, Piano)</li>
+	<li>Communism</li>
+</ul>
+
+<h2>Things I need to do on this site</h2>
+<ul>
+	<li>Add content as needed</li>
+	<li>Make a style</li>
+</ul>
+
+<hr />
+<p><a href="#snapchatref" name="snapchat">*</a>I really love the platform of snapchat. But I hate that it's proprietary and that all images are stored on their servers. So I'm interested in writing a snapchat clone that is free software and works off of p2p. However, I know that it will never be useful unless it has users, and it will never have users unless it can interop with the current snapchat api. Unfortunately, the only snapchat api hack I am aware of is SaaS and quite expensive, one of which is against the principles of free software and the other of which is prohibitory practically. If anyone knows of an api I can use, please <a href="mailto:lucidlyluna@gmail.com">email me</a>.</p>
+
+</body>
+</html>
