@@ -1,14 +1,139 @@
 <!DOCTYPE html>
 <html>
 <head>
-<style>
-	body {
-		font-size: 20px;
+<link rel="stylesheet" href="/static/home.css" />
+<script>
+	// TODO: Used?
+	function randomColor()
+	{
+		return [Math.random()*255, Math.random()*255, Math.random()*255];
 	}
-</style>
+	// Actually just elementwiseArrayAdd
+	function addColor(a, b)
+	{
+		return a.map(function(c,i){return c+b[i];});
+	}
+	function multiplyScalar(a, b)
+	{
+		return a.map(function(c){return c*b;});
+	}
+
+	//rotate/flip a quadrant appropriately (used for dToXY
+	function rot(n, x, y, rx, ry) {
+    	if (ry == 0) {
+        	if (rx == 1) {
+            	x = n-1 - x;
+            	y = n-1 - y;
+        	}
+	
+        	//Swap x and y
+        	var t  = x;
+        	x = y;
+        	y = t;
+    	}
+		return [x, y];
+	}
+
+
+	// Hilbert curve thanks https://en.wikipedia.org/wiki/Hilbert_curve
+	function dToXY(n, d)
+	{
+		var rx, ry, s, t=d;
+		var x = 0;
+		var y = 0;
+    	for (s=1; s<n; s*=2) {
+        	rx = 1 & (t/2);
+        	ry = 1 & (t ^ rx);
+        	var pos = rot(s, x, y, rx, ry);
+			x = pos[0];
+			y = pos[1];
+        	x += s * rx;
+        	y += s * ry;
+        	t /= 4;
+		}
+		return [x, y];
+	}
+
+
+	function loaded()
+	{
+		// Everything
+		bg = document.getElementById("background-canvas");
+		// Smallest canvas with power of two size that is bigger than screen
+		// Neets to be so for hilbert curve
+		bg.width = Math.pow(Math.ceil(Math.sqrt(window.innerWidth)), 2);
+		bg.height = bg.width; // TODO: What do I want here?
+		img = bg.getContext("2d");
+		imageData = img.getImageData(0, 0, bg.width, bg.height);
+		pxls = imageData.data;
+
+		function getIndex(x, y)
+		{
+			return (y * bg.width + x) * 4;
+		}
+		function getPixel(x, y)
+		{
+			var r = getIndex(x, y);
+			return [pxls[r], pxls[r+1], pxls[r+2], pxls[r+3]]
+		}
+		function setPixel(x, y, color)
+		{
+			if (color.length < 3)
+			{
+				throw (str(color) + " is not a color");
+			}
+			if (color.length < 4)
+			{
+				color.push(255);
+			}
+			var i = getIndex(x, y);
+			pxls[i] = color[0];
+			pxls[i+1] = color[1];
+			pxls[i+2] = color[2];
+			pxls[i+3] = color[3];
+		}
+
+		start = []
+		// Semicolon <3 i too :)
+		for (var i=0; i<3; i++)
+		{
+			start.push(Math.random() * 128 + 127);
+		}
+		for (var d=0; d<bg.width*bg.width; d++)
+		{
+			var pos = dToXY(bg.width, d);
+			var x = pos[0];
+			var y = pos[1];
+			if (x == 0 && y == 0)
+			{
+				setPixel(x, y, start);
+			}
+			else
+			{
+				var ref = [0, 0, 0, 0];
+				var count = Math.min(d, 20);
+				for (var i=1; i<=count; i++)
+				{
+					pos = dToXY(bg.width, d-i);
+					ref = addColor(ref, getPixel(pos[0], pos[1]));
+				}
+				var stray = 30;
+				ref[0] += Math.random() * stray - stray/2;
+				ref[1] += Math.random() * stray - stray/2;
+				ref[2] += Math.random() * stray - stray/2;
+				ref = multiplyScalar(ref, 1/count);
+				setPixel(x, y, ref);
+			}
+		}
+
+		img.putImageData(imageData, 0, 0);
+		
+	}
+	window.onload = loaded;
+</script>
 </head>
 <body>
-
+<canvas id="background-canvas"><div id="background-fallback"></div></canvas>
 <h1>Luna Phipps-Costin's Personal Website</h1>
 <p style="font-size: 40px;"><b><a href="/it">Looking for my IT work?</a></b></p>
 <p>"Sometimes, when I have time, more often when I don't, I make stuff."</p>

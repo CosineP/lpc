@@ -10,8 +10,13 @@ def default():
 
 @app.route("/it")
 def it_home():
-	return render_template("it/index.html")
+	return render_template("it/about.html", page="about")
 
 @app.route("/it/<name>")
 def it_page(name):
-	return render_template("it/" + name + ".html")
+	return render_template("it/" + name + ".html", page=name)
+
+@app.route("/alec")
+def prom():
+	return render_template("alec.html")
+

@@ -10,18 +10,40 @@ body {
 }
 
 nav {
+}
+
+nav > a {
+	display: block;
 	background-color: #00deff;
 	width: 100%;
 	margin: 0;
 	padding: 40px 0;
 	text-align: center;
 	box-shadow: 0 4px 10px 0 rgba(0,0,0,.26);
-}
-
-nav a {
 	color: #051f49;
 	text-decoration: none;
 	font-size: 40px;
+}
+
+nav ul {
+	display: block;
+	background-color: #051f49;
+	text-align: center;
+	font-size: 25px;
+}
+
+nav li {
+	display: inline-block;
+	padding: 10px 5%;
+}
+
+nav #active {
+	border-bottom: 2px #00deff solid;
+}
+
+nav li a {
+	color: #00deff;
+	text-decoration: none;
 }
 
 .linkback {
