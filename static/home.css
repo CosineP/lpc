@@ -1,0 +1,17 @@
+* {
+	/*margin: 0;
+	padding: 0;*/
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	font-size: 20px;
+}
+
+h1 {
+	margin: 0;
+	padding: 50px 0;
+	background-color: #FF6AD5;
+	text-align: center;
+}
