@@ -7,6 +7,7 @@ body {
 	background-color: #fde9fc;
 	color: #051f49;
 	font-size: 20px;
+	overflow-y: scroll;
 }
 
 nav {
@@ -38,7 +39,7 @@ nav li {
 }
 
 nav #active {
-	border-bottom: 2px #00deff solid;
+	border-bottom: 3px #00deff solid;
 }
 
 nav li a {
@@ -56,6 +57,10 @@ h2 {
 
 p {
 	text-indent: 50px;
+}
+
+a {
+	color: #00deff;
 }
 
 .card {
