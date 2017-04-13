@@ -1,0 +1,141 @@
+{% extends "it/standard.html" %}
+
+{% block title %}Pricing - Luna's IT Work{% endblock %}
+
+{% block head %}
+	{{ super() }}
+
+	<style>
+		.plans {
+			padding: 0 0 20px 0;
+			overflow-x: hidden;
+		}
+		.plan-swipe {
+			position: relative;
+			width: 10000000px;
+			transition: margin-left 0.2s;
+		}
+		.plan-swipe > div {
+			float: left;
+			padding-left: 20px;
+			max-width: 720px; /* The width of card, change if changed */
+		}
+		.plan-nav {
+			display: block;
+			background-color: #00deff;
+			width: 100%;
+			text-align: center;
+			margin-bottom: 20px;
+			white-space: nowrap;
+			overflow-x: hidden;
+		}
+		.plan-nav li {
+			display: inline-block;
+			padding: 10px 2%;
+		}
+		.plan-nav .active {
+			border-bottom: 3px #051f49 solid;
+		}
+		.plan-nav a {
+			color: #051f49;
+			text-decoration: none;
+		}
+		.plan {
+			position: relative;
+			overflow-x: hidden;
+			display: inline-block;
+		}
+		.plan h3 {
+			padding: 5px 10px;
+			margin:  5px 10px;
+			font-size: 25px;
+			float: left;
+			/*color: #00deff;*/
+			background-color: #fde9fc;
+		}
+		.plan h3 span {
+			font-size: 40px;
+		}
+		.plan p {
+			text-indent: 0px;
+		}
+	</style>
+	<script>
+		function scrollNav(e)
+		{
+
+			// Using links with #hrefs
+			var name = window.location.hash.substr(1);
+			var part = document.getElementById("s-" + name);
+
+			// Each section is lined up (hidden) horizontally
+			var horizontal = document.getElementsByClassName("plan-swipe")[0];
+			// Move the lineup backwards until only the section is visible
+			horizontal.style.marginLeft = "-" + part.offsetLeft + "px";
+			// (This parameter is animated by CSS automatically)
+
+			// Update the lines in the navigation bar
+			// First remove the old one
+			var old = e.oldURL;
+			old = old.substr(old.indexOf("#") + 1);
+			old = document.getElementById("l-" + old);
+			if (!old)
+			{
+				old = document.getElementsByClassName("plan-nav")[0].children[0];
+			}
+			old.classList.remove("active");
+			// ... and add the new one
+			document.getElementById("l-" + name).classList.add("active");
+		}
+		window.addEventListener("hashchange",scrollNav);
+		window.onload = function(){scrollNav({oldURL:""});};
+	</script>
+{% endblock %}
+
+{% block main %}
+<div class="wrap">
+	<div class="card">
+		<h2>Pricing</h2>
+		<p>Jobs can include a mix of pricing plans and you can change your
+		mind for the remainder of service at any time.</p>
+		<p><b>I charge $12 per hour for travel time from Kennebunk, Maine</b>.</p>
+		<p>Some jobs, such as hardware jobs, will require me to do on-site
+		service. I will let you know when this is the case.
+		If I unexpectedly need to come on site to resolve a problem, I
+		will schedule a time in advance and no charge will be incurred.</p>
+	</div>
+	<div class="plans card">
+		<ul class="plan-nav">
+			<li id="l-remote" class="active"><a href="#remote">Remote Service</a></li>
+			<li id="l-setup"><a href="#setup">Remote Service with Setup</a></li>
+			<li id="l-on-site"><a href="#on-site">On-site Service</a></li>
+		</ul>
+		<div class="plan-swipe">
+			<div class="plan" id="s-remote">
+				<h3>$<span>35</span>/hr</h3>
+				<p>In order to recieve remote service, you must install a free,
+				safe <a href="http://tightvnc.net/">remote operating
+				program</a>. I will provide instructions. I will also need
+				a detailed description of the problem by email or text.</p>
+			</div>
+			<div class="plan offscreen" id="s-setup">
+				<h3>$<span>35</span>/hr + $<span>20</span></h3>
+				<p>Remote service with setup requires no set up from you and
+				you can describe the problem in person. I will come to the site
+				and set up a service for me to remotely connect, then I will
+				work on the problem from my home.</p>
+			</div>
+			<div class="plan offscreen" id="s-on-site">
+				<h3>$<span>45</span>/hr</h3>
+				<p>For on-site service I will come to
+				the site to work. We will have to work out a schedule
+				that is compatible with my availability.</p>
+				<p>As a general rule, I am
+				available <b>between 4:15PM and 11:00PM on weekdays and all day on
+				weekends</b>.
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
