@@ -3,10 +3,15 @@
 <head>
 <link rel="stylesheet" href="/static/home.css" />
 <script>
-	// TODO: Used?
-	function randomColor()
+	function randomPastelle()
 	{
-		return [Math.random()*255, Math.random()*255, Math.random()*255];
+		var c = []
+		// Semicolon <3 i too :)
+		for (var i=0; i<3; i++)
+		{
+			c.push(Math.random() * 100 + 155);
+		}
+		return c;
 	}
 	// Actually just elementwiseArrayAdd
 	function addColor(a, b)
@@ -58,10 +63,10 @@
 	function loaded()
 	{
 		// Everything
-		bg = document.getElementById("background-canvas");
+		bg = document.createElement("canvas");
 		// Smallest canvas with power of two size that is bigger than screen
 		// Neets to be so for hilbert curve
-		bg.width = Math.pow(Math.ceil(Math.sqrt(window.innerWidth)), 2);
+		bg.width = Math.pow(2, Math.ceil(Math.log2(window.innerWidth)));
 		bg.height = bg.width; // TODO: What do I want here?
 		img = bg.getContext("2d");
 		imageData = img.getImageData(0, 0, bg.width, bg.height);
@@ -93,47 +98,169 @@
 			pxls[i+3] = color[3];
 		}
 
-		start = []
-		// Semicolon <3 i too :)
-		for (var i=0; i<3; i++)
+		function hilbertPaint()
 		{
-			start.push(Math.random() * 128 + 127);
-		}
-		for (var d=0; d<bg.width*bg.width; d++)
-		{
-			var pos = dToXY(bg.width, d);
-			var x = pos[0];
-			var y = pos[1];
-			if (x == 0 && y == 0)
+			for (var d=0; d<bg.width*bg.width; d++)
 			{
-				setPixel(x, y, start);
-			}
-			else
-			{
-				var ref = [0, 0, 0, 0];
-				var count = Math.min(d, 20);
-				for (var i=1; i<=count; i++)
+				var pos = dToXY(bg.width, d);
+				var x = pos[0];
+				var y = pos[1];
+				if (x == 0 && y == 0)
 				{
-					pos = dToXY(bg.width, d-i);
-					ref = addColor(ref, getPixel(pos[0], pos[1]));
+					setPixel(x, y, randomPastelle());
 				}
-				var stray = 30;
-				ref[0] += Math.random() * stray - stray/2;
-				ref[1] += Math.random() * stray - stray/2;
-				ref[2] += Math.random() * stray - stray/2;
-				ref = multiplyScalar(ref, 1/count);
-				setPixel(x, y, ref);
+				else
+				{
+					var ref = [0, 0, 0, 0];
+					var count = Math.min(d, 8);
+					for (var i=1; i<=count; i++)
+					{
+						pos = dToXY(bg.width, d-i);
+						ref = addColor(ref, getPixel(pos[0], pos[1]));
+					}
+					ref = multiplyScalar(ref, 1/count);
+					var stray = 2;
+					ref[0] += Math.random() * stray - stray/2;
+					ref[1] += Math.random() * stray - stray/2;
+					ref[2] += Math.random() * stray - stray/2;
+					setPixel(x, y, ref);
+				}
 			}
 		}
+		function recPnt(r, g, b, width, stray, d, x, y)
+		{
+			if (typeof d == "undefined")
+			{
+				d = 0;
+			}
+			if (typeof x == "undefined")
+			{
+				x = 0;
+				y = 0;
+			}
+			if (Math.pow(2, d) >= width)
+			{
+				setPixel(x, y, [r, g, b]);
+				return;
+			}
+			var size = width / Math.pow(2, d+1);
+			for (var s=0; s<4; s++)
+			{
+				r += Math.random() * stray - stray/2;
+				g += Math.random() * stray - stray/2;
+				b += Math.random() * stray - stray/2;
+				// Calculate the top-left corner of this section
+				var isRight = s % 2;
+				var isBottom = (s == 2 || s == 3);
+				recPnt(r, g, b, width, stray, d+1, x+size*isRight, y+size*isBottom);
+			}
+		}
+		function recursivePaint() { recPnt(randomPastelle()[0],
+		randomPastelle()[1], randomPastelle()[2], bg.width, 10); }
+		function diagonalPaint()
+		{
+			for (var x=0; x<bg.width; x++)
+			{
+				for (var y=0; y<bg.height; y++)
+				if (x == 0 && y == 0)
+				{
+					setPixel(x, y, randomPastelle());
+				}
+				else
+				{
+					var ref = [0, 0, 0, 0];
+					var count = 0;
+					if (x != 0)
+					{
+						ref = addColor(ref, getPixel(x-1, y));
+						count++;
+					}
+					if (y != 0)
+					{
+						ref = addColor(ref, getPixel(x, y-1));
+						count++;
+					}
+					ref = multiplyScalar(ref, 1/count);
+					var stray = 2;
+					ref[0] += Math.random() * stray - stray/2;
+					ref[1] += Math.random() * stray - stray/2;
+					ref[2] += Math.random() * stray - stray/2;
+					setPixel(x, y, ref);
+				}
+			}
+		}
+		function recNudge(x, y, c, d)
+		{
+			if (typeof d == "undefined")
+			{
+				d = {};
+			}
+			var color = getPixel(x, y);
+			if (color[0] == 0 && color[1] == 0 && color[2] == 0)
+			{
+				color[0] = 255;
+				color[1] = 255;
+				color[2] = 255;
+			}
+			color = addColor(color, c);
+			color[3] = 255;
+			setPixel(x, y, color);
+			d[x+","+y] = true;
+			if (c[0] < -2 || c[1] < -2 || c[2] < -2)
+			{
+				for (var nx=x-1; nx<=x+1; nx++)
+				{
+					for (var ny=y-1; ny<=y+1; ny++)
+					{
+						if (!d.hasOwnProperty(nx + "," + ny))
+						{
+							var stray = 1;
+							var nc = multiplyScalar(c, Math.random() * stray);
+							recNudge(nx, ny, nc, d);
+						}
+					}
+				}
+			}
+		}
+		function nudgePaint()
+		{
+			var count = 500;
+			for (var i=0; i<count; i++)
+			{
+				var stray = 100;
+				var x = Math.floor(Math.random() * bg.width);
+				var y = Math.floor(Math.random() * bg.height);
+				var c = [-Math.random()*stray, -Math.random()*stray, -Math.random()*stray];
+				recNudge(x, y, c);
+			}
+		}
+		var count = 100000;
+		var choice = Math.random();
+		if (choice < 1/count)
+		{
+			recursivePaint();
+		}
+		else if (choice < 2/count)
+		{
+			hilbertPaint();
+		}
+		else if (choice < 3/count)
+		{
+			diagonalPaint();
+		}
+		nudgePaint();
 
 		img.putImageData(imageData, 0, 0);
+
+		document.body.appendChild(bg);
+
+		document.body.style.backgroundImage = "url(" + bg.toDataURL() + ")";
 		
 	}
 	window.onload = loaded;
 </script>
 </head>
 <body>
-<canvas id="background-canvas"><div id="background-fallback"></div></canvas>
 <h1>Luna Phipps-Costin's Personal Website</h1>
 <p style="font-size: 40px;"><b><a href="/it">Looking for my IT work?</a></b></p>
 <p>"Sometimes, when I have time, more often when I don't, I make stuff."</p>
