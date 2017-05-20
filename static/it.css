@@ -11,6 +11,7 @@ body {
 }
 
 nav {
+	box-shadow: 0 4px 10px 0 rgba(0,0,0,.26);
 }
 
 nav > a {
@@ -172,4 +173,46 @@ a {
 	color: #3b9ad6;
 	/*color: #14115c;*/
 	margin-bottom: 10px;
+}
+
+/* Slider styles like seen on pricing. See /static/slider.js for description. */
+.slider {
+	padding: 0 0 20px 0;
+	overflow: hidden;
+	transition: height 0.2s;
+}
+.slides {
+	position: relative;
+	width: 10000000px;
+	transition: margin-left 0.2s;
+}
+.slides > div {
+	float: left;
+	padding-left: 20px;
+	max-width: 720px; /* The width of card, change if changed */
+}
+.slider-nav {
+	display: block;
+	background-color: #00deff;
+	width: 100%;
+	text-align: center;
+	margin-bottom: 20px;
+	white-space: nowrap;
+	overflow-x: hidden;
+}
+.slider-nav li {
+	display: inline-block;
+	padding: 10px 2%;
+}
+.slider-nav .active {
+	border-bottom: 3px #051f49 solid;
+}
+.slider-nav a {
+	color: #051f49;
+	text-decoration: none;
+}
+.slide {
+	position: relative;
+	overflow-x: hidden;
+	display: inline-block;
 }

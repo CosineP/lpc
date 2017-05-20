@@ -4,48 +4,8 @@
 
 {% block head %}
 	{{ super() }}
-
 	<style>
-		.plans {
-			padding: 0 0 20px 0;
-			overflow-x: hidden;
-		}
-		.plan-swipe {
-			position: relative;
-			width: 10000000px;
-			transition: margin-left 0.2s;
-		}
-		.plan-swipe > div {
-			float: left;
-			padding-left: 20px;
-			max-width: 720px; /* The width of card, change if changed */
-		}
-		.plan-nav {
-			display: block;
-			background-color: #00deff;
-			width: 100%;
-			text-align: center;
-			margin-bottom: 20px;
-			white-space: nowrap;
-			overflow-x: hidden;
-		}
-		.plan-nav li {
-			display: inline-block;
-			padding: 10px 2%;
-		}
-		.plan-nav .active {
-			border-bottom: 3px #051f49 solid;
-		}
-		.plan-nav a {
-			color: #051f49;
-			text-decoration: none;
-		}
-		.plan {
-			position: relative;
-			overflow-x: hidden;
-			display: inline-block;
-		}
-		.plan h3 {
+		.slide h3 {
 			padding: 5px 10px;
 			margin:  5px 10px;
 			font-size: 25px;
@@ -53,43 +13,18 @@
 			/*color: #00deff;*/
 			background-color: #fde9fc;
 		}
-		.plan h3 span {
+		.slide h3 span {
 			font-size: 40px;
 		}
-		.plan p {
+		.slide p {
 			text-indent: 0px;
 		}
 	</style>
-	<script>
-		function scrollNav(e)
-		{
-
-			// Using links with #hrefs
-			var name = window.location.hash.substr(1);
-			var part = document.getElementById("s-" + name);
-
-			// Each section is lined up (hidden) horizontally
-			var horizontal = document.getElementsByClassName("plan-swipe")[0];
-			// Move the lineup backwards until only the section is visible
-			horizontal.style.marginLeft = "-" + part.offsetLeft + "px";
-			// (This parameter is animated by CSS automatically)
-
-			// Update the lines in the navigation bar
-			// First remove the old one
-			var old = e.oldURL;
-			old = old.substr(old.indexOf("#") + 1);
-			old = document.getElementById("l-" + old);
-			if (!old)
-			{
-				old = document.getElementsByClassName("plan-nav")[0].children[0];
-			}
-			old.classList.remove("active");
-			// ... and add the new one
-			document.getElementById("l-" + name).classList.add("active");
-		}
-		window.addEventListener("hashchange",scrollNav);
-		window.onload = function(){scrollNav({oldURL:""});};
-	</script>
+	<script
+	  src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+	  integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
+	  crossorigin="anonymous"></script>
+	<script src="/static/slider.js"></script>
 {% endblock %}
 
 {% block main %}
@@ -104,28 +39,28 @@
 		If I unexpectedly need to come on site to resolve a problem, I
 		will schedule a time in advance and no charge will be incurred.</p>
 	</div>
-	<div class="plans card">
-		<ul class="plan-nav">
-			<li id="l-remote" class="active"><a href="#remote">Remote Service</a></li>
+	<div class="slider card">
+		<ul class="slider-nav">
+			<li id="l-remote"><a href="#remote">Remote Service</a></li>
 			<li id="l-setup"><a href="#setup">Remote Service with Setup</a></li>
 			<li id="l-on-site"><a href="#on-site">On-site Service</a></li>
 		</ul>
-		<div class="plan-swipe">
-			<div class="plan" id="s-remote">
+		<div class="slides">
+			<div class="slide" id="s-remote">
 				<h3>$<span>35</span>/hr</h3>
 				<p>In order to recieve remote service, you must install a free,
 				safe <a href="http://tightvnc.net/">remote operating
 				program</a>. I will provide instructions. I will also need
 				a detailed description of the problem by email or text.</p>
 			</div>
-			<div class="plan offscreen" id="s-setup">
+			<div class="slide offscreen" id="s-setup">
 				<h3>$<span>35</span>/hr + $<span>20</span></h3>
 				<p>Remote service with setup requires no set up from you and
 				you can describe the problem in person. I will come to the site
 				and set up a service for me to remotely connect, then I will
 				work on the problem from my home.</p>
 			</div>
-			<div class="plan offscreen" id="s-on-site">
+			<div class="slide offscreen" id="s-on-site">
 				<h3>$<span>45</span>/hr</h3>
 				<p>For on-site service I will come to
 				the site to work. We will have to work out a schedule
