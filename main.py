@@ -5,8 +5,9 @@ app = Flask(__name__)
 app.config['DEBUG'] = True
 
 @app.route("/")
+@app.route("/resume")
 def default():
-	return render_template("index.html")
+	return render_template("resume.html")
 
 @app.route("/it")
 def it_home():
@@ -16,7 +17,10 @@ def it_home():
 def it_page(name):
 	return render_template("it/" + name + ".html", page=name)
 
-@app.route("/alec")
-def prom():
-	return render_template("alec.html")
+@app.route("/home")
+def personal_page():
+	return render_template("home.html")
 
+@app.route("/canvas")
+def canvas_fun():
+	return render_template("canvas.html")
