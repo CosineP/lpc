@@ -199,6 +199,7 @@ a {
 	margin-bottom: 20px;
 	white-space: nowrap;
 	overflow-x: hidden;
+	box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
 }
 .slider-nav li {
 	display: inline-block;
