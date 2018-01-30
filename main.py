@@ -1,7 +1,5 @@
 from flask import Flask, request
 from flask import render_template
-import sc
-from PIL import Image
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
@@ -55,5 +53,5 @@ def colleges_resume():
 		"georgia-state" : "Georgia State",
 		"unb" : "University of New Brunswick",
 		}
-	return render_template("colleges/interactive.html", college=college, name=full_names[college], sc_result=sc_result)
+	return render_template("colleges/interactive.html", college=college, name=full_names[college])
 
