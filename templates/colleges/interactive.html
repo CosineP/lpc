@@ -1,0 +1,210 @@
+<!doctype HTML>
+<html>
+	<head>
+	<title>Luna Phipps-Costin</title>
+	<script
+		src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+		integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
+		crossorigin="anonymous"></script>
+	<script src="/static/shiny-text.js"></script>
+	<link rel="stylesheet" href="/static/shiny-text.css">
+	<style>
+		.wrap {
+			max-width: 40em;
+		}
+		.demo, .demo iframe {
+			width: 720px;
+			height: 720px;
+			float: left;
+			margin-right: 1em;
+			margin-bottom: 2em;
+			border: none;
+		}
+		#entropy, #entropy iframe {
+			/* 16:9 */
+			width: 800px;
+			height: 451px; /* Prevent scrollbar */
+		}
+		@media screen {
+			.demo-fallback {
+				display: none;
+			}
+		}
+		@media print {
+			h1 {
+				font-size: 30px;
+			}
+			h2 {
+				font-size: 25px;
+			}
+			.big-text {
+				background: white;
+			}
+			* {
+				text-shadow: unset !important;
+			}
+			.wild, .wild-letter, a.wild-letter, .wild a {
+				margin: 0 !important;
+				padding: 0 !important;
+			}
+			p, pre {
+				font-size: 15px;
+			}
+			.demo, .demo-fallback {
+				width: 400px;
+				height: 400px;
+			}
+			.demo iframe {
+				display: none;
+			}
+			.demo-fallback {
+				display: block;
+				float: left;
+			}
+			.no-print {
+				display: none;
+			}
+		}
+	</style>
+	</head>
+	<body>
+		<h1><a class="wild" href="/">Luna Phipps-Costin</a></h1>
+		<h2 class="duplicated" style="margin-left: 20px;">An interactive resume for {{ name }}</h2>
+		<div class="wrap">
+			<p>
+				Hi -
+			</p>
+			<p>
+				I'm Luna Phipps-Costin. On my <a href="/resume">homepage</a>,
+				you can find your way to
+				all of my projects, including software tools, many games, and contributions to
+				Mozilla Firefox.
+				But I wanted to give you an interactive look at some of my
+				favourite projects, so I made this page for you.
+			</p>
+		</div>
+		<div class="demo">
+			<iframe src="https://cosinegaming.com/flip"></iframe>
+			<img src="/static/colleges/flip.png" class="demo-fallback" />
+		</div>
+		<div class="caption">
+			<h3><a class="wild" href="https://cosinegaming.com/flip">Flip</a></h3>
+			<p>
+				It’s one of my favorite games
+				I’ve made. Your character is that blue “R,” and your goal is to
+				make it to the green “R.” Clicking on one of those black bars
+				reflects your character over that axis.
+			</p>
+			<p class="no-print">
+				The game is embedded to the left.
+			</p>
+			<p>This is an interesting
+				problem, because it asks the player to find the solution
+				<a href="https://en.wikipedia.org/wiki/Coxeter_group">Coxeter
+				group</a>, given certain possible reflections. Moreover, I had to
+				learn the mathematics of reflections in a way that I can present
+				it in a puzzle game without sounding like math!
+			</p>
+			<p>
+				Another fun thing to point out is the code used to calculate the “R”s’
+				positions. All of the reflections are calculated using
+				<a href="https://en.wikipedia.org/wiki/Matrix_multiplication">
+					Matrix
+					multiplication</a>
+				(so the browser can render the transformation). Here’s
+				<a href="https://github.com/CosineGaming/flip/blob/master/game.js#L591-L597">
+					the Javascript</a>
+				I used to calculate these matrices:
+			</p>
+			<pre>
+var b = line[1] - m*line[0];
+var q1 = m + (1 / m);
+var q2 = 1 + m*m; // ...
+flip = new SVG.Matrix(
+	2/m/q1 - 1, 2*m/q2,
+	2/q1, 2*m*m/q2 - 1,
+	-2*b/q1, 2*b/q2);
+			</pre>
+		</div>
+		<div style="clear: both"></div>
+		<div class="demo">
+			<img src="/static/colleges/subreddit-classifier.png" />
+			<img src="/static/colleges/subreddit-classifier.png" class="demo-fallback" />
+		</div>
+		<div class="caption">
+			<p>
+				Bah bah classify some subsssZzz!!!!
+			</p>
+		</div>
+		<div style="clear: both"></div>
+		<div class="demo" id="entropy">
+			<iframe src="https://cosinegaming.com/entropy"></iframe>
+			<img src="/static/colleges/entropy.png" class="demo-fallback" />
+		</div>
+		<div class="caption">
+			<h3><a class="wild big-text" href="https://cosinegaming.com/entropy">Entropy</a></h3>
+			<p>
+				I made this game for <a href="http://ldjam.com/">Ludum Dare</a>,
+				a "game jam" in which people make games in 48 hours about a
+				specific theme, and share them with each other. This theme was <i>One Room</i>.
+			</p>
+			<p>
+				My idea was to make a dungeon crawler where, instead of
+				advancing to other rooms, you advance to different energy levels of the same
+				room. The higher energy levels are more difficult to survive in.
+			</p>
+			<p>
+				I really enjoyed what I made, so I continued to work on it. I
+				fixed some bugs and made it support touch fully, so that it
+				could be used on mobile phones.
+			</p>
+			<p class="no-print">
+				It's embedded to the left. Use the arrow keys to move around,
+				and click in a direction to shoot. When you're ready, go to one of those blue
+				portals and hold <code>E</code> to advance to the next energy level.
+			</p>
+		</div>
+		<div style="clear: both"></div>
+		<div class="demo">
+			<iframe src="https://cosinegaming.com/swarm/"></iframe>
+			<img src="/static/colleges/swarm.png" class="demo-fallback" />
+		</div>
+		<div class="caption">
+			<h3><a class="wild big-text" href="https://cosinegaming.com/swarm/">Swarm</a></h3>
+			<p>
+				I made this game for <a href="http://ldjam.com/">Ludum Dare</a> as well;
+				this theme was <i>You are the enemy</i>. I wanted to make a
+				game where you don't have the "hero's advantage" you have in many games -
+				you're just another grunt, more likely to die than anyone else. To do this, I
+				made it so that you were amongst a huge swarm of enemies, and upon dying your
+				consciousness transferred to another member of the swarm. This
+				made balance interesting, because you play a small - but still significant! -
+				part in the outcome of the game.
+			</p>
+			<p>
+				For this game I wanted to focus on making the game <i>feel</i>
+				"juicy." So I focused on making the graphics fun (I used pastel colors of pink
+				and cyan), and added some fun sound effects. I especially liked my way of
+				making subtle screenshot to make your shots feel powerful.
+			</p>
+			<p class="no-print">
+				It's embedded to the left. Use the keys <code>WSAD</code> as arrow keys to move around,
+				and click in a direction to shoot. You must kill the blue square-ish thing
+				(a <code>Triflapper</code>)
+			</p>
+		</div>
+		<div style="clear: both"></div>
+		<h2 class="duplicated no-print">
+			License: <a href="https://www.gnu.org/licenses/gpl-3.0-standalone.html">GPLv3</a>
+		</h2>
+		<p class="no-print">
+			<i>
+				This site is <a href="https://www.gnu.org/philosophy/free-sw.html">free software</a>.
+				You can view the <a href="https://github.com/CosineP/lpc">source</a>
+				on GitHub.
+			</i>
+		</p>
+		<p class="duplicated no-print">This text effect is inspired by <a href="http://www.billwurtz.com/">Bill Wurtz</a>.
+		</p>
+	</body>
+</html>

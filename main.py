@@ -1,5 +1,7 @@
-from flask import Flask
+from flask import Flask, request
 from flask import render_template
+import sc
+from PIL import Image
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
@@ -24,3 +26,34 @@ def personal_page():
 @app.route("/canvas")
 def canvas_fun():
 	return render_template("canvas.html")
+
+@app.route("/colleges")
+@app.route("/dartmouth")
+@app.route("/georgia-tech")
+@app.route("/nyu")
+@app.route("/mit")
+@app.route("/stanford")
+@app.route("/mudd")
+@app.route("/oberlin")
+@app.route("/rit")
+@app.route("/umass-amherst")
+@app.route("/georgia-state")
+@app.route("/unb")
+def colleges_resume():
+	college = request.url_rule.rule[1:]
+	full_names = {
+		"colleges" : "college",
+		"dartmouth" : "Dartmouth",
+		"georgia-tech" : "Georgia Tech",
+		"nyu" : "New York University",
+		"mit" : "MIT",
+		"stanford" : "Stanford",
+		"mudd" : "Harvey Mudd",
+		"oberlin" : "Oberlin",
+		"rit" : "RIT",
+		"umass-amherst" : "UMass Amherst",
+		"georgia-state" : "Georgia State",
+		"unb" : "University of New Brunswick",
+		}
+	return render_template("colleges/interactive.html", college=college, name=full_names[college], sc_result=sc_result)
+
