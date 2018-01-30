@@ -1,4 +1,5 @@
 lib/*
 *.swp
 *.pyc
+venv/
 
