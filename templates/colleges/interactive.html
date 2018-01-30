@@ -12,7 +12,7 @@
 		.wrap {
 			max-width: 40em;
 		}
-		.demo, .demo iframe {
+		.demo, .demo iframe, .demo img {
 			width: 720px;
 			height: 720px;
 			float: left;
@@ -50,16 +50,12 @@
 			p, pre {
 				font-size: 15px;
 			}
-			.demo, .demo-fallback {
-				width: 400px;
-				height: 400px;
-			}
 			.demo iframe {
 				display: none;
 			}
-			.demo-fallback {
-				display: block;
-				float: left;
+			.demo, .demo-fallback, .demo img, #entropy {
+				width: 300px;
+				height: 300px;
 			}
 			.no-print {
 				display: none;
@@ -69,7 +65,7 @@
 	</head>
 	<body>
 		<h1><a class="wild" href="/">Luna Phipps-Costin</a></h1>
-		<h2 class="duplicated" style="margin-left: 20px;">An interactive resume for {{ name }}</h2>
+		<h2 class="no-print duplicated" style="margin-left: 20px;">An interactive resume for {{ name }}</h2>
 		<div class="wrap">
 			<p>
 				Hi -
@@ -90,51 +86,64 @@
 		<div class="caption">
 			<h3><a class="wild" href="https://cosinegaming.com/flip">Flip</a></h3>
 			<p>
-				It’s one of my favorite games
-				I’ve made. Your character is that blue “R,” and your goal is to
+				Your character is that blue “R,” and your goal is to
 				make it to the green “R.” Clicking on one of those black bars
 				reflects your character over that axis.
-			</p>
-			<p class="no-print">
-				The game is embedded to the left.
+				<span class="no-print">
+					(The game is embedded to the left.)
+				</span>
 			</p>
 			<p>This is an interesting
-				problem, because it asks the player to find the solution
+				game, because it asks the player to find the solution
 				<a href="https://en.wikipedia.org/wiki/Coxeter_group">Coxeter
-				group</a>, given certain possible reflections. Moreover, I had to
-				learn the mathematics of reflections in a way that I can present
-				it in a puzzle game without sounding like math!
+				group</a>, given certain possible reflections. I had to
+				learn the mathematics of reflections and present
+				them without sounding like math!
 			</p>
 			<p>
-				Another fun thing to point out is the code used to calculate the “R”s’
-				positions. All of the reflections are calculated using
+				One difficult thing is calculating the "R"s' positions. All of
+				the reflections are calculated using
 				<a href="https://en.wikipedia.org/wiki/Matrix_multiplication">
-					Matrix
-					multiplication</a>
-				(so the browser can render the transformation). Here’s
-				<a href="https://github.com/CosineGaming/flip/blob/master/game.js#L591-L597">
-					the Javascript</a>
-				I used to calculate these matrices:
+					Matrix multiplication</a>. It was a challenge to find
+				<a href="https://github.com/CosineGaming/flip/blob/master/game.js#L591-L597">a way</a>
+				to calculate these matrices based on the line's beginning and end.
 			</p>
-			<pre>
-var b = line[1] - m*line[0];
-var q1 = m + (1 / m);
-var q2 = 1 + m*m; // ...
-flip = new SVG.Matrix(
-	2/m/q1 - 1, 2*m/q2,
-	2/q1, 2*m*m/q2 - 1,
-	-2*b/q1, 2*b/q2);
-			</pre>
 		</div>
 		<div style="clear: both"></div>
 		<div class="demo">
-			<img src="/static/colleges/subreddit-classifier.png" />
-			<img src="/static/colleges/subreddit-classifier.png" class="demo-fallback" />
+			<img src="/static/colleges/sc.png" />
 		</div>
 		<div class="caption">
+			<h3><a href="https://github.com/CosineP/subreddit-classifier" class="big-text wild" style="width: 35%;">Subreddit Classifier</a></h3>
 			<p>
-				Bah bah classify some subsssZzz!!!!
+				Subreddit Classifier downloads images from the social media site
+				<a href="https://www.reddit.com/">reddit</a>. Reddit has subfora
+				(“subreddits”) that focus on specific topics. I created a
+				Convolutional Neural Network that attempts to classify what
+				subreddit an image should belong to.
 			</p>
+			<p>
+				The project, when it had all of its data, was able to classify
+				certain subreddits with 90% accuracy (unfortunately the >20GB of
+				data were lost in a HDD failure)
+			</p>
+			<p>
+				Pictured is the classifications made (with less data and
+				training - my original data was lost in a hard drive failure) of
+				the subreddit “animewallpaper” vs all combined subreddits
+				(“all”).
+			</p>
+			<p>
+				As you can see, /r/animewallpaper receives very few false
+				positives. (In fact, the network is trained for this, as false-positives are
+				more destructive in my goals than false-negatives).
+			</p>
+			{% if college != "stanford" %}
+				<p>
+					<a href="/static/colleges/sc.pdf">Read more</a> about
+					Subreddit Classifier.
+				</p>
+			{% endif %}
 		</div>
 		<div style="clear: both"></div>
 		<div class="demo" id="entropy">
