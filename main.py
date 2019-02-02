@@ -36,6 +36,7 @@ def canvas_fun():
 @app.route("/rit")
 @app.route("/umass-amherst")
 @app.route("/georgia-state")
+@app.route("/wit")
 @app.route("/unb")
 def colleges_resume():
 	college = request.url_rule.rule[1:]
@@ -51,6 +52,7 @@ def colleges_resume():
 		"rit" : "RIT",
 		"umass-amherst" : "UMass Amherst",
 		"georgia-state" : "Georgia State",
+		"wit" : "Wentworth Institute of Technology",
 		"unb" : "University of New Brunswick",
 		}
 	return render_template("colleges/interactive.html", college=college, name=full_names[college])

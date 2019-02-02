@@ -25,6 +25,9 @@
 			width: 800px;
 			height: 451px; /* Prevent scrollbar */
 		}
+		.print-only {
+			display: none;
+		}
 		@media screen {
 			.demo-fallback {
 				display: none;
@@ -32,23 +35,27 @@
 		}
 		@media print {
 			h1 {
-				font-size: 30px;
+				font-size: 25px;
 			}
 			h2 {
 				font-size: 25px;
 			}
 			.big-text {
-				background: white;
+				font-size: 25px;
 			}
 			* {
 				text-shadow: unset !important;
 			}
-			.wild, .wild-letter, a.wild-letter, .wild a {
+			.wild, .wild-letter, a.wild-letter, .wild a, .duplicated-container {
 				margin: 0 !important;
 				padding: 0 !important;
 			}
+			h1, h2, h3 {
+				margin: 0.1em 0.1em;
+			}
 			p, pre {
 				font-size: 15px;
+				margin: 0.5em;
 			}
 			.demo iframe {
 				display: none;
@@ -57,8 +64,14 @@
 				width: 300px;
 				height: 300px;
 			}
+			.demo, .caption {
+				margin-top: 20px;
+			}
 			.no-print {
 				display: none;
+			}
+			.print-only {
+				display: block;
 			}
 		}
 	</style>
@@ -66,26 +79,31 @@
 	<body>
 		<h1><a class="wild" href="/">Luna Phipps-Costin</a></h1>
 		<h2 class="no-print duplicated" style="margin-left: 20px;">An interactive resume for {{ name }}</h2>
-		<div class="wrap">
-			<p>
+		<p class="big-text print-only" style="color: #071f87 !important;">
+			Please view the interactive version at
+			<b>lunaphippscostin.com/{{ college }}</b>
+		</p>
+		<div style="clear: both;">
+			<div class="wrap">
+				<p>
 				Hi -
-			</p>
-			<p>
+				</p>
+				<p>
 				I'm Luna Phipps-Costin. On my <a href="/resume">homepage</a>,
 				you can find your way to
 				all of my projects, including software tools, many games, and contributions to
 				Mozilla Firefox.
 				But I wanted to give you an interactive look at some of my
 				favourite projects, so I made this page for you.
-			</p>
-		</div>
-		<div class="demo">
-			<iframe src="https://cosinegaming.com/flip"></iframe>
-			<img src="/static/colleges/flip.png" class="demo-fallback" />
-		</div>
-		<div class="caption">
-			<h3><a class="wild" href="https://cosinegaming.com/flip">Flip</a></h3>
-			<p>
+				</p>
+			</div>
+			<div class="demo">
+				<iframe src="https://cosinegaming.com/flip"></iframe>
+				<img src="/static/colleges/flip.png" class="demo-fallback" />
+			</div>
+			<div class="caption">
+				<h3><a class="wild" href="https://cosinegaming.com/flip">Flip</a></h3>
+				<p>
 				Your character is that blue “R,” and your goal is to
 				make it to the green “R.” Clicking on one of those black bars
 				reflects your character over that axis.
@@ -125,7 +143,7 @@
 			<p>
 				The project, when it had all of its data, was able to classify
 				certain subreddits with 90% accuracy (unfortunately the >20GB of
-				data were lost in a HDD failure)
+				data were lost in a HDD failure).
 			</p>
 			<p>
 				Pictured is the classifications made (with less data and
@@ -139,7 +157,7 @@
 				more destructive in my goals than false-negatives).
 			</p>
 			{% if college != "stanford" %}
-				<p>
+				<p class="no-print">
 					<a href="/static/colleges/sc.pdf">Read more</a> about
 					Subreddit Classifier.
 				</p>
@@ -194,7 +212,7 @@
 				For this game I wanted to focus on making the game <i>feel</i>
 				"juicy." So I focused on making the graphics fun (I used pastel colors of pink
 				and cyan), and added some fun sound effects. I especially liked my way of
-				making subtle screenshot to make your shots feel powerful.
+				making the screen shake subtly to make your shots feel powerful.
 			</p>
 			<p class="no-print">
 				It's embedded to the left. Use the keys <code>WSAD</code> as arrow keys to move around,
