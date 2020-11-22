@@ -2,18 +2,22 @@ body {
     background-color: #ffe0ff;
     color: #0b1563;
     font-size: 2em;
-    margin: 1em;
+    margin: 0.8em;
+    font-family: serif;
 }
 ul {
     list-style-type: none;
+    padding: 0;
+    margin-left: 10%;
 }
 li {
-    padding: 1em;
+    padding: 1em 0;
 }
 a {
     background-color: #0b1563;
     color: #ffe0ff;
     padding: 0.2em;
+    line-height: 1.8em;
 }
 span:first-child {
     color: #6562a8;
@@ -24,4 +28,14 @@ span:first-child {
 }
 .mv {
     background-color: #620dff;
+}
+@media (max-width: 45em) {
+    ul {
+        margin-left: 0;
+    }
+    span:first-child {
+        position: absolute;
+        margin-top: -1.2em;
+        font-size: 0.7em;
+    }
 }

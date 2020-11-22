@@ -1,23 +1,20 @@
 body {
 	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#630951+0,2c0325+99 */
 	background: #630951; /* Old browsers */
-	background: -moz-linear-gradient(left, #630951 0%, #2c0325 99%); /* FF3.6-15 */
-	background: -webkit-linear-gradient(left, #630951 0%,#2c0325 99%); /* Chrome10-25,Safari5.1-6 */
-	background: linear-gradient(to right, #630951 0%,#2c0325 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#630951', endColorstr='#2c0325',GradientType=1 ); /* IE6-9 */
-	font-size: 20px;
+	background: linear-gradient(to left, #2c0325 0%, #630951 99%);
+	font-size: 1.4em;
 	color: #f6e3f6;
 	margin: 20px 20px 20px 30px;
 	font-family: sans-serif;
 }
 h1 {
-	font-size: 75px;
+	font-size: 4em;
 }
 h2 {
-	font-size: 35px;
+	font-size: 2em;
 }
 .big-text {
-	font-size: 30px;
+	font-size: 1.5em;
 }
 ul {
 	padding: 0;
@@ -56,10 +53,8 @@ a:hover:not(.wild) {
 	text-shadow: 0px 0px 4px currentcolor;
 }
 .duplicated-container {
+    isolation: isolate;
 	position: relative;
-	padding: 20px;
-	margin: 5px;
-	margin-left: -0.2em;
 }
 .duplicated {
 	position: absolute;
@@ -68,7 +63,7 @@ a:hover:not(.wild) {
 	mix-blend-mode: difference;
 }
 .duplicated:first-child {
-	mix-blend-mode: normal;
+    position: relative;
 }
 /* Now that we have duplicated text, hovering and selecting is a fucking
    mess. Do what we can to make it more tolerable. */
@@ -95,4 +90,7 @@ a:hover:not(.wild) {
 .wrap {
     max-width: 35em;
     margin-left: 1em;
+}
+#mail-link {
+    overflow-wrap: anywhere;
 }
