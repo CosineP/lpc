@@ -1,16 +1,18 @@
+# TODO: delete and put on my server
 runtime: python27
 api_version: 1
 threadsafe: true
 
 handlers:
-- url: /mudd/essay
-  static_files: static/mudd/index.html
-  upload: static/mudd/index.html
-- url: /mudd/create
-  static_files: static/mudd/create.html
-  upload: static/mudd/create.html
-- url: /static
-  static_dir: static
-- url: /.*
-  script: main.app
+- url: /
+  static_files: index.html
+  upload: index.html
+
+- url: /skiline/
+  static_files: skiline/index.html
+  upload: skiline/index.html
+
+- url: /(.*)
+  static_files: \1
+  upload: (.*)
 

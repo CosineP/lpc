@@ -1,0 +1,27 @@
+body {
+    background-color: #ffe0ff;
+    color: #0b1563;
+    font-size: 2em;
+    margin: 1em;
+}
+ul {
+    list-style-type: none;
+}
+li {
+    padding: 1em;
+}
+a {
+    background-color: #0b1563;
+    color: #ffe0ff;
+    padding: 0.2em;
+}
+span:first-child {
+    color: #6562a8;
+}
+.with {
+    font-weight: bold;
+    color: #620dff;
+}
+.mv {
+    background-color: #620dff;
+}

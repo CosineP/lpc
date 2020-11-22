@@ -1,0 +1,98 @@
+body {
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#630951+0,2c0325+99 */
+	background: #630951; /* Old browsers */
+	background: -moz-linear-gradient(left, #630951 0%, #2c0325 99%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(left, #630951 0%,#2c0325 99%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to right, #630951 0%,#2c0325 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#630951', endColorstr='#2c0325',GradientType=1 ); /* IE6-9 */
+	font-size: 20px;
+	color: #f6e3f6;
+	margin: 20px 20px 20px 30px;
+	font-family: sans-serif;
+}
+h1 {
+	font-size: 75px;
+}
+h2 {
+	font-size: 35px;
+}
+.big-text {
+	font-size: 30px;
+}
+ul {
+	padding: 0;
+	margin: 0 0 0 0;
+}
+li {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	margin: 1em 0;
+}
+.wild {
+	display: inline-block;
+	position: relative;
+	opacity: 1;
+	padding: 10px 0;
+	margin: 5px;
+}
+a.wild {
+	text-decoration: none;
+}
+.wild-letter {
+	position: relative;
+	padding: 5px;
+	transition: 0.5s;
+}
+.wild-letter, a {
+	text-shadow: 0px 0px 10px currentcolor;
+}
+a {
+	color: #f6e3f6;
+	text-decoration: none;
+	transition: text-shadow 0.2s;
+}
+a:hover:not(.wild) {
+	text-shadow: 0px 0px 4px currentcolor;
+}
+.duplicated-container {
+	position: relative;
+	padding: 20px;
+	margin: 5px;
+	margin-left: -0.2em;
+}
+.duplicated {
+	position: absolute;
+	margin: 0;
+	padding: 0;
+	mix-blend-mode: difference;
+}
+.duplicated:first-child {
+	mix-blend-mode: normal;
+}
+/* Now that we have duplicated text, hovering and selecting is a fucking
+   mess. Do what we can to make it more tolerable. */
+.duplicated a {
+	text-shadow: none;
+	opacity: 1;
+	transition: 0.5s;
+}
+.duplicated:first-child a {
+	text-shadow: 0px 0px 10px currentcolor;
+}
+.duplicated-container:hover .duplicated:last-child a {
+	opacity: 0;
+}
+.duplicated-container:hover .duplicated:first-child a {
+	text-shadow: 0px 0px 4px currentcolor;
+}
+.duplicated:last-child::-moz-selection {
+	display: none;
+}
+.duplicated:last-child::selection {
+	display: none;
+}
+.wrap {
+    max-width: 35em;
+    margin-left: 1em;
+}

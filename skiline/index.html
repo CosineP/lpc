@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<script src="libodon.js"></script>
+		<script src="index.js"></script>
+		<style>
+			body {
+				overflow: hidden;
+				background-color: #051126;
+				color: #c8dbfc;
+				background-image: url('assets/city-bg.jpg');
+				margin: 0;
+				padding: 0;
+			}
+			a {
+				color: #71e4b6;
+			}
+			.star {
+				position: absolute;
+				top: 0%;
+				animation-name: fall;
+				animation-fill-mode: forwards;
+				animation-timing-function: linear;
+			}
+			.icon {
+				position: relative;
+				padding: 1em;
+				cursor: pointer;
+			}
+			.toot {
+				position: relative;
+				display: none;
+				left: -50%;
+				max-width: 33em;
+				background-color: #132b5855;
+				padding: 1em;
+				z-index: 2;
+			}
+			.link-out {
+				text-decoration: none;
+			}
+			.fg {
+				position: absolute;
+				top: 0;
+				left: 0;
+				margin: 0;
+				padding: 0;
+				z-index: 1;
+				pointer-events: none;
+			}
+			form {
+				margin: 5em;
+			}
+			@keyframes fall {
+				to {
+					top: 100%;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<form id="login">
+			<input type="text" placeholder="instance domain" id="instance-domain" autofocus />
+			<input type="submit" onclick="logIn()" value="log in" />
+		</form>
+		<img src="assets/city-fg.png" alt="a girl looks out at a city at night" class="fg" />
+	</body>
+</html>

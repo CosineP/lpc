@@ -1,0 +1,380 @@
+Fix skiline scopes problem, maybe
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch main
+# Changes to be committed:
+#	deleted:    old.html
+#	modified:   skiline/index.js
+#
+# ------------------------ >8 ------------------------
+# Do not modify or remove the line above.
+# Everything below it will be ignored.
+diff --git a/old.html b/old.html
+deleted file mode 100644
+index d3b41ee..0000000
+--- a/old.html
++++ /dev/null
+@@ -1,349 +0,0 @@
+-<!DOCTYPE html>
+-<html>
+-<head>
+-<link rel="stylesheet" href="/static/home.css" />
+-<script>
+-	function randomPastelle()
+-	{
+-		var c = []
+-		// Semicolon <3 i too :)
+-		for (var i=0; i<3; i++)
+-		{
+-			c.push(Math.random() * 100 + 155);
+-		}
+-		return c;
+-	}
+-	// Actually just elementwiseArrayAdd
+-	function addColor(a, b)
+-	{
+-		return a.map(function(c,i){return c+b[i];});
+-	}
+-	function multiplyScalar(a, b)
+-	{
+-		return a.map(function(c){return c*b;});
+-	}
+-
+-	//rotate/flip a quadrant appropriately (used for dToXY
+-	function rot(n, x, y, rx, ry) {
+-    	if (ry == 0) {
+-        	if (rx == 1) {
+-            	x = n-1 - x;
+-            	y = n-1 - y;
+-        	}
+-	
+-        	//Swap x and y
+-        	var t  = x;
+-        	x = y;
+-        	y = t;
+-    	}
+-		return [x, y];
+-	}
+-
+-
+-	// Hilbert curve thanks https://en.wikipedia.org/wiki/Hilbert_curve
+-	function dToXY(n, d)
+-	{
+-		var rx, ry, s, t=d;
+-		var x = 0;
+-		var y = 0;
+-    	for (s=1; s<n; s*=2) {
+-        	rx = 1 & (t/2);
+-        	ry = 1 & (t ^ rx);
+-        	var pos = rot(s, x, y, rx, ry);
+-			x = pos[0];
+-			y = pos[1];
+-        	x += s * rx;
+-        	y += s * ry;
+-        	t /= 4;
+-		}
+-		return [x, y];
+-	}
+-
+-
+-	function loaded()
+-	{
+-		// Everything
+-		bg = document.createElement("canvas");
+-		// Smallest canvas with power of two size that is bigger than screen
+-		// Neets to be so for hilbert curve
+-		bg.width = Math.pow(2, Math.ceil(Math.log2(window.innerWidth)));
+-		bg.height = bg.width; // TODO: What do I want here?
+-		img = bg.getContext("2d");
+-		imageData = img.getImageData(0, 0, bg.width, bg.height);
+-		pxls = imageData.data;
+-
+-		function getIndex(x, y)
+-		{
+-			return (y * bg.width + x) * 4;
+-		}
+-		function getPixel(x, y)
+-		{
+-			var r = getIndex(x, y);
+-			return [pxls[r], pxls[r+1], pxls[r+2], pxls[r+3]]
+-		}
+-		function setPixel(x, y, color)
+-		{
+-			if (color.length < 3)
+-			{
+-				throw (str(color) + " is not a color");
+-			}
+-			if (color.length < 4)
+-			{
+-				color.push(255);
+-			}
+-			var i = getIndex(x, y);
+-			pxls[i] = color[0];
+-			pxls[i+1] = color[1];
+-			pxls[i+2] = color[2];
+-			pxls[i+3] = color[3];
+-		}
+-
+-		function hilbertPaint()
+-		{
+-			for (var d=0; d<bg.width*bg.width; d++)
+-			{
+-				var pos = dToXY(bg.width, d);
+-				var x = pos[0];
+-				var y = pos[1];
+-				if (x == 0 && y == 0)
+-				{
+-					setPixel(x, y, randomPastelle());
+-				}
+-				else
+-				{
+-					var ref = [0, 0, 0, 0];
+-					var count = Math.min(d, 8);
+-					for (var i=1; i<=count; i++)
+-					{
+-						pos = dToXY(bg.width, d-i);
+-						ref = addColor(ref, getPixel(pos[0], pos[1]));
+-					}
+-					ref = multiplyScalar(ref, 1/count);
+-					var stray = 2;
+-					ref[0] += Math.random() * stray - stray/2;
+-					ref[1] += Math.random() * stray - stray/2;
+-					ref[2] += Math.random() * stray - stray/2;
+-					setPixel(x, y, ref);
+-				}
+-			}
+-		}
+-		function recPnt(r, g, b, width, stray, d, x, y)
+-		{
+-			if (typeof d == "undefined")
+-			{
+-				d = 0;
+-			}
+-			if (typeof x == "undefined")
+-			{
+-				x = 0;
+-				y = 0;
+-			}
+-			if (Math.pow(2, d) >= width)
+-			{
+-				setPixel(x, y, [r, g, b]);
+-				return;
+-			}
+-			var size = width / Math.pow(2, d+1);
+-			for (var s=0; s<4; s++)
+-			{
+-				r += Math.random() * stray - stray/2;
+-				g += Math.random() * stray - stray/2;
+-				b += Math.random() * stray - stray/2;
+-				// Calculate the top-left corner of this section
+-				var isRight = s % 2;
+-				var isBottom = (s == 2 || s == 3);
+-				recPnt(r, g, b, width, stray, d+1, x+size*isRight, y+size*isBottom);
+-			}
+-		}
+-		function recursivePaint() { recPnt(randomPastelle()[0],
+-		randomPastelle()[1], randomPastelle()[2], bg.width, 10); }
+-		function diagonalPaint()
+-		{
+-			for (var x=0; x<bg.width; x++)
+-			{
+-				for (var y=0; y<bg.height; y++)
+-				if (x == 0 && y == 0)
+-				{
+-					setPixel(x, y, randomPastelle());
+-				}
+-				else
+-				{
+-					var ref = [0, 0, 0, 0];
+-					var count = 0;
+-					if (x != 0)
+-					{
+-						ref = addColor(ref, getPixel(x-1, y));
+-						count++;
+-					}
+-					if (y != 0)
+-					{
+-						ref = addColor(ref, getPixel(x, y-1));
+-						count++;
+-					}
+-					ref = multiplyScalar(ref, 1/count);
+-					var stray = 2;
+-					ref[0] += Math.random() * stray - stray/2;
+-					ref[1] += Math.random() * stray - stray/2;
+-					ref[2] += Math.random() * stray - stray/2;
+-					setPixel(x, y, ref);
+-				}
+-			}
+-		}
+-		function recNudge(x, y, c, d)
+-		{
+-			if (typeof d == "undefined")
+-			{
+-				d = {};
+-			}
+-			var color = getPixel(x, y);
+-			if (color[0] == 0 && color[1] == 0 && color[2] == 0)
+-			{
+-				color[0] = 255;
+-				color[1] = 255;
+-				color[2] = 255;
+-			}
+-			color = addColor(color, c);
+-			color[3] = 255;
+-			setPixel(x, y, color);
+-			d[x+","+y] = true;
+-			if (c[0] < -2 || c[1] < -2 || c[2] < -2)
+-			{
+-				for (var nx=x-1; nx<=x+1; nx++)
+-				{
+-					for (var ny=y-1; ny<=y+1; ny++)
+-					{
+-						if (!d.hasOwnProperty(nx + "," + ny))
+-						{
+-							var stray = 1;
+-							var nc = multiplyScalar(c, Math.random() * stray);
+-							recNudge(nx, ny, nc, d);
+-						}
+-					}
+-				}
+-			}
+-		}
+-		function nudgePaint()
+-		{
+-			var count = 500;
+-			for (var i=0; i<count; i++)
+-			{
+-				var stray = 100;
+-				var x = Math.floor(Math.random() * bg.width);
+-				var y = Math.floor(Math.random() * bg.height);
+-				var c = [-Math.random()*stray, -Math.random()*stray, -Math.random()*stray];
+-				recNudge(x, y, c);
+-			}
+-		}
+-		var count = 100000;
+-		var choice = Math.random();
+-		if (choice < 1/count)
+-		{
+-			recursivePaint();
+-		}
+-		else if (choice < 2/count)
+-		{
+-			hilbertPaint();
+-		}
+-		else if (choice < 3/count)
+-		{
+-			diagonalPaint();
+-		}
+-		nudgePaint();
+-
+-		img.putImageData(imageData, 0, 0);
+-
+-		document.body.appendChild(bg);
+-
+-		document.body.style.backgroundImage = "url(" + bg.toDataURL() + ")";
+-		
+-	}
+-	window.onload = loaded;
+-</script>
+-</head>
+-<body>
+-<h1>cosine's Personal Website</h1>
+-<p style="font-size: 40px;"><b><a href="/it">Looking for my IT work?</a></b></p>
+-<p>"Sometimes, when I have time, more often when I don't, I make stuff."</p>
+-<p>Hi, I'm cosine, high schooler and <a href="https://stallman.org/articles/on-hacking.html">hacker</a>. I created and continue to maintain <a href="http://cosinegaming.com">Cosine Gaming</a>.</p>
+-<p>To quote my <a href="http://cosinegaming.com/about">about page</a> on CG, here's a little about me:</p>
+-<p>
+-	Cosine is often seen wasting her time in front of two bright LCDs,
+-	discussing with her friends about Bioshock,
+-	attempting to play an instrument and consoling crying onlookers,
+-	moving her pencil on paper in weird patterns she tries to call "art",
+-	learning so many languages she'll probably never be fluent in any of them,
+-	working through the dense pages of Kagan's AP Euro textbook,
+-	reading old classics she should have read ages ago,
+-	watching TV (especially anime),
+-	playing games on her PC,
+-	playing games on her friends's consoles,
+-	listing things she does,
+-	or simply being in awe of how awesome <a href="http://en.wikipedia.org/wiki/MOSFET">MOSFET Transistors</a> are.
+-</p>
+-
+-{% set ip = "216.195.175.190" %}
+-
+-<h2>Email</h2>
+-<p>All of these emails will make it to me eventually</p>
+-<ul>
+-	<li><code>{{ "lucidlyluna@gmail.com"|urlize }}</code> (most personal)</li>
+-	<li><code>{{ "luna@lunaphippscostin.com"|urlize }}</code> (redirects to personal)</li>
+-	<li><code>{{ "18lphippscostin@rsu21.net"|urlize }}</code> (school)</li>
+-	<li><code>{{ "cosinegaming@gmail.com"|urlize }}</code> (CG related)</li>
+-	<li><code>{{ "cosine@cosinegaming.com"|urlize }}</code> (CG related spec. to me)</li>
+-</ul>
+-
+-<h2>Usernames</h2>
+-<p>I try to use the username <code>Cosine</code>, but when that is not available I use <code>CosineP</code>, which is almost always available.</p>
+-<ul>
+-	<li><code><a href="https://www.reddit.com/user/CosineP">/u/CosineP</a></code> on reddit</li>
+-	<li><code>cosinep</code> on snapchat<a href="#snapchat" name="snapchatref">*</a></li>
+-	<li><code>More Important Things</code> on Steam</li>
+-</ul>
+-
+-<h2>Projects / Links</h2>
+-<ul>
+-	<li><a href="http://cosinegaming.com/">Cosine Gaming</a><ul>
+-		<li>Also hosts my (more-or-less) personal <a href="http://cosinegaming.com/blog/">blog</a></li>
+-	</ul></li>
+-	<li><a href="https://github.com/CosineP/">GitHub (personal)</a><ul>Especially:
+-		<li><a href="https://github.com/CosineP/subreddit-classifier">Subreddit Classifier</a></li>
+-	</ul></li>
+-	<li><a href="https://github.com/CosineGaming/">GitHub (CG)</a></li>
+-</ul>
+-
+-<h2>Useful Networking Links</h2>
+-<ul>
+-	<li>My IP: <a href="http://{{ ip }}">{{ ip }}</a></li>
+-	<li><a href="home.cosinegaming.com:8080">Local CG Instance</a> (when it's up)</li>
+-	<li>SSH: luna@{{ ip }}:22</li>
+-</ul>
+-
+-<h2>Things I like</h2>
+-<ul>
+-	<li><a href="https://reddit.com/">reddit</a></li>
+-	<li><a href="https://xkcd.com">xkcd</a></li>
+-	<li><a href="https://stallman.org">RMS's personal website</a></li>
+-	<li><a href="http://jonls.dk/redshift/">Redshift (makes your computer screen less like the sun during the night)</a></li>
+-	<li><a href="https://www.gnu.org/">GNU/Linux, a free software operating system</a></li>
+-	<li><a href="http://www.vim.org/">Vim, a text editor</a></li>
+-	<li>Cookies</li>
+-	<li>Playing music (Tenor Saxophone, Piano)</li>
+-	<li>Communism</li>
+-</ul>
+-
+-<h2>Things I need to do on this site</h2>
+-<ul>
+-	<li>Add content as needed</li>
+-	<li>Make a style</li>
+-</ul>
+-
+-<h2>This site is Free Software</h2>
+-<p>You can view
+-<a href="https://github.com/CosineP/lpc">the source</a> on GitHub.</p>
+-
+-<hr />
+-<p><a href="#snapchatref" name="snapchat">*</a>I really love the platform of snapchat. But I hate that it's proprietary and that all images are stored on their servers. So I'm interested in writing a snapchat clone that is free software and works off of p2p. However, I know that it will never be useful unless it has users, and it will never have users unless it can interop with the current snapchat api. Unfortunately, the only snapchat api hack I am aware of is SaaS and quite expensive, one of which is against the principles of free software and the other of which is prohibitory practically. If anyone knows of an api I can use, please <a href="mailto:lucidlyluna@gmail.com">email me</a>.</p>
+-
+-</body>
+-</html>
+diff --git a/skiline/index.js b/skiline/index.js
+index f992c72..e3c747c 100644
+--- a/skiline/index.js
++++ b/skiline/index.js
+@@ -17,7 +17,7 @@ function logIn(domain) {
+     var ownUrl = window.location.href;
+     localStorage.setItem('lastDomain', instanceDomain);
+ 
+-    var app = new Libodon('skiline', ownUrl);
++    var app = new Libodon('skiline', ownUrl, 'read');
+     app.use_actionlog();
+     app.use_errorlog();
+     var connection = app.connect(serverUrl, userEmail)
