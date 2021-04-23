@@ -1,0 +1,35 @@
+body {
+    margin: 4em;
+    background-color: #f5f3e9;
+	background: linear-gradient(to right, #f5f3e9, #f5f3e9 65em, #d6d3c1);
+    color: #261701;
+    max-width: 55em;
+}
+.embed-link {
+    position: relative;
+    height: 350px;
+}
+.embed-link iframe {
+    width: 100%;
+    height: 100%;
+    border: 2px solid #261701;
+}
+.embed-link a {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+a {
+    color: #3693ad;
+}
+a:hover {
+    color: #5db6cf;
+}
+a:visited {
+    color: #b86144;
+}
+a:active {
+    color: #c41f7d;
+}
