@@ -5,9 +5,17 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="stylesheet" href="embed.css" />
+<script>
+    window.addEventListener("load", function() {
+        let email = "lphip" + "pscosti@uma" + "ss.edu";
+        let element = document.getElementById("email");
+        element.innerHTML = email;
+    });
+</script>
 </head>
 <body>
     <h1>Cosine's Site</h1>
+    <p id="email" style="font-family: monospace; font-size: 2em;">l phipps costi (no spaces) [] umass [edumacation]</p>
     <h2>About Me</h2>
     <p>
         My name is luna, they|she, i'm a second year undergraduate computer
@@ -26,12 +34,12 @@
         2021-04 | <span style="font-weight:bold">in submission</span>
     </p>
     <div class="embed-link">
-        <iframe src="papers/2021-typewhich-submission.pdf"></iframe>
+        <iframe src="papers/2021-typewhich-submission.pdf" sandbox="allow-scripts"></iframe>
         <a href="papers/2021-typewhich-submission.pdf"></a>
     </div>
     <h2>GitHub</h2>
     <div class="embed-link">
-        <iframe src="embed/github-CosineP.html"></iframe>
+        <iframe src="embed/github-CosineP.html" sandbox=""></iframe>
         <a href="https://github.com/CosineP"></a>
     </div>
     <h2>Games</h2>
@@ -40,12 +48,12 @@
         <a href="https://games.cosine.website"></a>
     </div>
     <div class="embed-link" style="width: 50%; height: 200px; display: inline-block;">
-        <iframe src="embed/github-CosineGaming.html"></iframe>
+        <iframe src="embed/github-CosineGaming.html" sandbox=""></iframe>
         <a href="https://github.com/CosineGaming" class="embed-link"></a>
     </div><h3 style="display: inline-block; margin: 2em; position: absolute;">Games GitHub</h3>
     <h2>Bugzilla</h2>
     <div class="embed-link">
-        <iframe src="embed/bugzilla.html"></iframe>
+        <iframe src="embed/bugzilla.html" sandbox=""></iframe>
         <a href="https://bugzilla.mozilla.org/user_profile?user_id=497233"></a>
     </div>
     <h2>Videos<h2>
@@ -55,7 +63,7 @@
     </div>
     <h2>Songs</h2>
     <div class="embed-link">
-        <iframe src="songs/index.html"></iframe>
+        <iframe src="songs/index.html" sandbox=""></iframe>
         <a href="songs/index.html"></a>
     </div>
     <h2>Also</h2>
