@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="stylesheet" href="embed.css" />
 <script>
-    window.addEventListener("load", function() {
+    document.addEventListener("DOMContentLoaded", function() {
         let email = "lphip" + "pscosti@uma" + "ss.edu";
         let element = document.getElementById("email");
         element.innerHTML = email;
@@ -15,8 +15,7 @@
 </head>
 <body>
     <h1>Cosine's Site</h1>
-    <p id="email" style="font-family: monospace; font-size: 2em;">l phipps costi (no spaces) [] umass [edumacation]</p>
-    <h2>About Me</h2>
+    <p id="email" style="font-family: monospace; font-size: 2em; overflow: auto">l phipps costi (no spaces) [] umass [edumacation]</p>
     <p>
         My name is luna, they|she, i'm a second year undergraduate computer
         science student at UMass Amherst with a particular interest in
@@ -29,46 +28,41 @@
         and some other cool people related to JavaScript,
         WebAssembly, and Gradual Types.
     </p>
-    <h2>Publications</h2>
-    <p>
+    <p style="font-size: 1.3em;">
         2021-04 | <span style="font-weight:bold">in submission</span>
     </p>
-    <div class="embed-link">
+    <div class="embed-link no-top">
         <iframe src="papers/2021-typewhich-submission.pdf" sandbox="allow-scripts"></iframe>
         <a href="papers/2021-typewhich-submission.pdf"></a>
     </div>
-    <h2>GitHub</h2>
     <div class="embed-link">
         <iframe src="embed/github-CosineP.html" sandbox=""></iframe>
         <a href="https://github.com/CosineP"></a>
     </div>
-    <h2>Games</h2>
-    <div class="embed-link">
-        <iframe src="https://games.cosine.website"></iframe>
-        <a href="https://games.cosine.website"></a>
+    <div class="side-by-side">
+        <div class="embed-link" style="flex: 2">
+            <iframe src="https://games.cosine.website"></iframe>
+            <a href="https://games.cosine.website"></a>
+        </div>
+        <div class="embed-link" style="flex: 1">
+            <iframe src="embed/github-CosineGaming.html" sandbox=""></iframe>
+            <a href="https://github.com/CosineGaming" class="embed-link"></a>
+        </div>
     </div>
-    <div class="embed-link" style="width: 50%; height: 200px; display: inline-block;">
-        <iframe src="embed/github-CosineGaming.html" sandbox=""></iframe>
-        <a href="https://github.com/CosineGaming" class="embed-link"></a>
-    </div><h3 style="display: inline-block; margin: 2em; position: absolute;">Games GitHub</h3>
-    <h2>Bugzilla</h2>
     <div class="embed-link">
         <iframe src="embed/bugzilla.html" sandbox=""></iframe>
         <a href="https://bugzilla.mozilla.org/user_profile?user_id=497233"></a>
     </div>
-    <h2>Videos<h2>
     <div class="embed-link">
         <iframe src="https://dialup.express/video-channels/cosine_channel/videos"></iframe>
         <a href="https://dialup.express/video-channels/cosine_channel/videos"></a>
     </div>
-    <h2>Songs</h2>
     <div class="embed-link">
         <iframe src="songs/index.html" sandbox=""></iframe>
         <a href="songs/index.html"></a>
     </div>
-    <h2>Also</h2>
-    <p>Please consider helping Caleb afford post-op care.</p>
-    <div class="embed-link">
+    <p style="font-size: 1.3em;">Please consider helping Caleb afford post-op care.</p>
+    <div class="embed-link no-top">
         <iframe src="https://www.gofundme.com/f/calebs-post-op-care"></iframe>
         <a href="https://www.gofundme.com/f/calebs-post-op-care"></a>
     </div>
